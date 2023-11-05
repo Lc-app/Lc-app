@@ -38,6 +38,10 @@ dependencies:
   rxdart: ^0.27.7
   mockito: ^5.4.2
   dio: ^5.3.3
+  freezed: ^2.3.2
+  json_annotation: ^4.8.0
+  build_runner: ^2.3.3
+  connectivity_plus: ^3.0.3
 
 dev_dependencies:
   flutter_test:
