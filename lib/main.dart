@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:vx_project/app/counter/counter_bloc/counter_bloc.dart';
 import 'package:vx_project/app/counter/counter_page/counter_page.dart';
+import 'package:vx_project/services/get_it_service.dart';
+import 'package:vx_project/utils/color.dart';
 
 void main() {
+  setUpDI();
   runApp(const MyApp());
 }
 
@@ -15,11 +17,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        // primaryColor: backGroundColor,
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: CounterPage(
-        counterBloc: CounterBloc(),
+        counterBloc: counterBLoc,
       ),
     );
   }

@@ -3,13 +3,13 @@ import 'package:vx_project/core/networking/network_response.dart';
 typedef SuccessHandle<Model> = Function(Model data);
 typedef FailureHandle = Function(String errorMessage);
 
-extension NetworkResponseX on NetworkResponse {
+extension NetworkResponseX<Model> on NetworkResponse<Model> {
   dynamic on({
-    required SuccessHandle successHandle,
+    required SuccessHandle<Model> successHandle,
     required FailureHandle failureHandle,
   }) {
     if (this is Ok) {
-      successHandle.call((this as Ok).data);
+      successHandle.call((this as Ok<Model>).data);
     } else {
       final errorMessage = whenOrNull(
         timeOut: (message) => message,

@@ -1,13 +1,16 @@
+import 'package:vx_project/data/model/counter.dart';
+// part '../counter_bloc/counter_bloc.dart';
+
 enum CounterStatus { initual, success, error }
 
 class CounterState {
-  final int counter;
+  final Counter? counter;
   final CounterStatus? status;
 
-  CounterState({required this.counter, this.status});
+  CounterState({this.counter, this.status});
 
   CounterState copywith({
-    int? counter,
+    Counter? counter,
     CounterStatus? status,
   }) {
     return CounterState(

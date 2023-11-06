@@ -49,15 +49,8 @@ Future<NetworkResponse<Model>> executeRequest<Model>(
         return const NetworkResponse.timeOut(
             "Quá thời gian kết nối vui lòng thử lại");
       default:
-        if (await NetworkConnection.isConnected()) {
-          return const NetworkResponse.noInternetAccess(
-              "Không có kết nối mạng");
-        }
-        final errorText = error.toString();
         final code = error.response?.statusCode ?? 1000;
-        if (error.requestOptions.cancelToken!.isCancelled) {
-          return NetworkResponse.noData(errorText);
-        }
+
         if (code == 401) {
           return NetworkResponse.noAuth(error.response?.data.toString() ??
               "Chưa xác thực,Vui lòng đăng nhập!!!");
@@ -86,23 +79,13 @@ Future<NetworkResponse<Model>> executeRequest<Model>(
 class NetworkService {
   NetworkService({
     required this.baseUrl,
-    dioClient,
-    httpHeaders,
-  })  : _dio = dioClient,
-        _headers = httpHeaders ?? {};
+    required Map<String, String> httpHeaders,
+  })  : _headers = httpHeaders,
+        _dio = _createDioClient(baseUrl, httpHeaders);
 
-  final Dio? _dio;
+  final Dio _dio;
   final String baseUrl;
   final Map<String, String> _headers;
-
-  Future<Dio> _getDefaultDioClient() async {
-    _headers['content-type'] = 'application/json; charset=utf-8';
-    return Dio()
-      ..options.baseUrl = baseUrl
-      ..options.headers = _headers
-      ..options.connectTimeout = const Duration(seconds: 5)
-      ..options.receiveTimeout = const Duration(seconds: 5);
-  }
 
   Future<NetworkResponse<Model>> execute<Model>(
     NetworkRequest request,
@@ -110,11 +93,10 @@ class NetworkService {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    _dio ?? await _getDefaultDioClient();
     final req = _PreparedNetworkRequest<Model>(
       request,
       parser,
-      _dio!,
+      _dio,
       {..._headers, ...(request.headers ?? {})},
       onSendProgress,
       onReceiveProgress,
@@ -125,4 +107,13 @@ class NetworkService {
     );
     return result;
   }
+}
+
+_createDioClient(String baseUrl, Map<String, String> headers) {
+  headers['content-type'] = 'application/json; charset=utf-8';
+  return Dio()
+    ..options.baseUrl = baseUrl
+    ..options.headers = headers
+    ..options.connectTimeout = const Duration(seconds: 5)
+    ..options.receiveTimeout = const Duration(seconds: 5);
 }

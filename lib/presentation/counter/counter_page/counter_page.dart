@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vx_project/app/counter/counter_bloc/counter_bloc.dart';
 import 'package:vx_project/app/counter/counter_bloc/counter_state.dart';
+import 'package:vx_project/data/model/counter.dart';
+import 'package:vx_project/utils/color.dart';
+import 'package:vx_project/utils/font.dart';
 
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key, required this.counterBloc});
@@ -8,8 +11,10 @@ class CounterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backGroundColor,
       appBar: AppBar(
         title: const Text("Counter"),
+        backgroundColor: backGroundColor,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -17,12 +22,21 @@ class CounterPage extends StatelessWidget {
           StreamBuilder(
             stream: counterBloc.state,
             builder: (context, snapShot) {
-              final state = snapShot.data ??
-                  CounterState(counter: 0, status: CounterStatus.initual);
-              return Text(
-                state.counter.toString(),
-                style: const TextStyle(fontSize: 30),
-              );
+              final state =
+                  snapShot.data ?? CounterState(status: CounterStatus.initual);
+              if (state.status == CounterStatus.initual) {
+                return const CircularProgressIndicator();
+              } else if (state.status == CounterStatus.error) {
+                return const Text(
+                  'Some thing went wrong',
+                  style: TextStyle(fontSize: 30),
+                );
+              } else {
+                return Text(
+                  state.counter?.value.toString() ?? "",
+                  style: regularStyle,
+                );
+              }
             },
           ),
           const SizedBox(height: 20),

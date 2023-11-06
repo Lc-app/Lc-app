@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'network_response.freezed.dart';
 
 @freezed
-class NetworkResponse<Model> with _$NetworkResponse {
+class NetworkResponse<Model> with _$NetworkResponse<Model> {
   const factory NetworkResponse.ok(Model data) = Ok;
 
   const factory NetworkResponse.timeOut(String message) = TimeOut;
