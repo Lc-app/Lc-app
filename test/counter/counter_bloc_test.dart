@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vx_project/app/counter/counter_bloc/counter_bloc.dart';
-import 'package:vx_project/app/counter/counter_bloc/counter_state.dart';
+import 'package:vx_project/presentation/counter/counter_bloc/counter_bloc.dart';
+import 'package:vx_project/presentation/counter/counter_bloc/counter_state.dart';
 
 import 'mock/mock_repo.dart';
 

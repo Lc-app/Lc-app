@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:vx_project/app/counter/counter_page/counter_page.dart';
-import 'package:vx_project/services/get_it_service.dart';
-import 'package:vx_project/utils/color.dart';
+import 'package:vx_project/presentation/counter/counter_page/counter_page.dart';
+import 'package:vx_project/services/injector.dart';
+import 'package:vx_project/utils/app_router.dart';
+import 'package:vx_project/utils/config/color.dart';
 
 void main() {
   setUpDI();
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      onGenerateRoute: (setting) => AppRouter.generateRoute(setting),
       home: CounterPage(
         counterBloc: counterBLoc,
       ),

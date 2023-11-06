@@ -1,5 +1,5 @@
 import 'package:rxdart/rxdart.dart';
-import 'package:vx_project/app/counter/counter_bloc/counter_state.dart';
+import 'package:vx_project/presentation/counter/counter_bloc/counter_state.dart';
 import 'package:vx_project/core/base_bloc.dart';
 import 'package:vx_project/core/networking/networking_export.dart';
 import 'package:vx_project/domain/counter/counter_repo.dart';

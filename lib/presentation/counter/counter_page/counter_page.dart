@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:vx_project/app/counter/counter_bloc/counter_bloc.dart';
-import 'package:vx_project/app/counter/counter_bloc/counter_state.dart';
-import 'package:vx_project/data/model/counter.dart';
-import 'package:vx_project/utils/color.dart';
-import 'package:vx_project/utils/font.dart';
+import 'package:vx_project/presentation/counter/counter_bloc/counter_bloc.dart';
+import 'package:vx_project/presentation/counter/counter_bloc/counter_state.dart';
+import 'package:vx_project/utils/app_router.dart';
+import 'package:vx_project/utils/config/color.dart';
+import 'package:vx_project/utils/config/font.dart';
 
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key, required this.counterBloc});
