@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:vx_project/presentation/counter/counter_bloc/counter_bloc.dart';
-import 'package:vx_project/presentation/counter/counter_bloc/counter_state.dart';
-import 'package:vx_project/utils/app_router.dart';
+import 'package:get/get.dart';
+import 'package:vx_project/presentation/counter/controller/counter_controller.dart';
 import 'package:vx_project/utils/config/color.dart';
-import 'package:vx_project/utils/config/font.dart';
 
-class CounterPage extends StatelessWidget {
-  const CounterPage({super.key, required this.counterBloc});
-  final CounterBloc counterBloc;
+class CounterPage extends GetView<CounterController> {
+  const CounterPage({
+    super.key,
+  });
+  // final CounterBloc counterBloc;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,25 +19,11 @@ class CounterPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          StreamBuilder(
-            stream: counterBloc.state,
-            builder: (context, snapShot) {
-              final state =
-                  snapShot.data ?? CounterState(status: CounterStatus.initual);
-              if (state.status == CounterStatus.initual) {
-                return const CircularProgressIndicator();
-              } else if (state.status == CounterStatus.error) {
-                return const Text(
-                  'Some thing went wrong',
-                  style: TextStyle(fontSize: 30),
-                );
-              } else {
-                return Text(
-                  state.counter?.value.toString() ?? "",
-                  style: regularStyle,
-                );
-              }
-            },
+          controller.obx(
+            (state) => Text(state?.value.toString() ?? ""),
+            onEmpty: const Text("Không có dữ liệu"),
+            onError: (error) => Text(error.toString()),
+            onLoading: const CircularProgressIndicator(),
           ),
           const SizedBox(height: 20),
           Row(
@@ -45,14 +31,14 @@ class CounterPage extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  counterBloc.decrement();
+                  controller.decrement();
                 },
                 child: const Icon(Icons.remove),
               ),
               const SizedBox(width: 15),
               ElevatedButton(
                 onPressed: () {
-                  counterBloc.increment();
+                  controller.increment();
                 },
                 child: const Icon(Icons.add),
               ),
